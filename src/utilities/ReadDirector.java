@@ -78,9 +78,14 @@ public interface ReadDirector {
 	{
 		PreparedStatement  stmt=null;
         try {
-         stmt = (PreparedStatement) connection.prepareStatement("delete from Elev\r\n" + 
-         		"where id_elev = ?;");
+         stmt = (PreparedStatement) connection.prepareStatement("delete from Elev where id_elev = ?;"
+         		+ "delete from Note where id_elev = ?;"
+         		+ "delete from Absente where id_elev = ?;"
+         		+ "delete from LoginData where id = ?;");
          stmt.setString(1, id);
+         stmt.setString(2, id);
+         stmt.setString(3, id);
+         stmt.setString(4, id);
          stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

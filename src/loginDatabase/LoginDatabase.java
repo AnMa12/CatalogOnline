@@ -9,7 +9,7 @@ public class LoginDatabase
     private LoginDatabase(String user,char[] password){
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://myownpi.ddns.net:3306/register", "admin", "admin"
+                    "jdbc:mysql://myownpi.ddns.net:3306/register?allowMultiQueries=true", "admin", "admin"
             );
         } catch (SQLException e) {
             e.printStackTrace();
