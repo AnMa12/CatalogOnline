@@ -36,6 +36,7 @@ public class DirectorFrame extends UserFrame {
 	private Director director;
 	private ArrayList<String> clase;
 	private ArrayList<Elev> elevi;
+	private AddFrame addFrame;
 	public DirectorFrame(String id,Connection connection) {
 		this.connection=connection;
 		director =new Director(id);
@@ -83,7 +84,16 @@ public class DirectorFrame extends UserFrame {
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnAdd.setBounds(33, 312, 111, 34);
 		frame.getContentPane().add(btnAdd);
-
+		btnAdd.addActionListener( new ActionListener()
+		{
+		    @Override
+		    public void actionPerformed(ActionEvent e)
+		    {
+		        addFrame=new AddFrame(connection);
+		      
+		        addFrame.frame.setVisible(true);
+		    }
+		});
 	}
 
 	private void addStudentSelector() {
