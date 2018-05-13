@@ -33,6 +33,7 @@ public class DirectorFrame extends UserFrame {
 	private ArrayList<Elev> elevi;
 	private JButton saveButton;
 	private JButton cancelButton;
+	private AddFrame addFrame;
 	public DirectorFrame(String id,Connection connection) {
 		this.connection=connection;
 		director =new Director(id);
