@@ -36,8 +36,8 @@ public class MainActivity {
 					userFrame =new StudentFrame(ld.getId(),(Connection) ld.getConnection());
 					else if(ld.getStatut().equals("1"))
 						userFrame =new TeacherFrame(ld.getId(),(Connection) ld.getConnection());
-						//else if(ld.getStatut().equals("0"))
-							//userFrame =new DirectorFrame(ld.getId(),(Connection) ld.getConnection());
+						else if(ld.getStatut().equals("0"))
+							userFrame =new DirectorFrame(ld.getId(),(Connection) ld.getConnection());
 					userFrame.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
