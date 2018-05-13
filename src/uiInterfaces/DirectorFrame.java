@@ -158,21 +158,6 @@ public class DirectorFrame extends UserFrame {
 			}});
 	}
 
-	/*classSelector.addItemListener(new ItemListener(){
-			  public void itemStateChanged(ItemEvent ie){   
-				    if (ie.getStateChange() == ItemEvent.SELECTED)
-				  {
-				    	elevi = director.getElevi(classSelector.getSelectedItem().toString(),connection);
-				    	studentSelector.removeAllItems();
-		            	for(Elev x:elevi)
-		            	studentSelector.addItem(x.getNume()+" "+x.getPrenume());
-		            	editButton.setEnabled(true);
-		            	deleteButton.setEnabled(true);
-				    }
-				  }
-		});
-	}*/
-
 	private void addTextFields() {
 		numeTF = new JTextField();
 		numeTF.setEditable(false);
