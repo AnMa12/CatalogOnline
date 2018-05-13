@@ -3,7 +3,10 @@ package utilities;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
@@ -52,4 +55,38 @@ public interface ReadDirector {
         }
         return elevi;
 	}
+	
+	default Boolean updateElev(String nume,String prenume,String clasa,String id,Connection connection) {
+		PreparedStatement  stmt=null;
+        try {
+         stmt = (PreparedStatement) connection.prepareStatement("update Elev\r\n" + 
+         		"set nume = ?, prenume = ?, clasa = ?\r\n" + 
+         		"where id_elev = ?;");
+         stmt.setString(1, nume);
+         stmt.setString(2, prenume);
+         stmt.setString(3, clasa);
+         stmt.setString(4, id);
+         stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+	}
+	
+	default Boolean removeElev(String id, Connection connection)
+	{
+		PreparedStatement  stmt=null;
+        try {
+         stmt = (PreparedStatement) connection.prepareStatement("delete from Elev\r\n" + 
+         		"where id_elev = ?;");
+         stmt.setString(1, id);
+         stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+	}
 }
+
