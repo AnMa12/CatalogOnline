@@ -1,6 +1,5 @@
 package uiInterfaces;
 
-
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -10,15 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-
 import javax.swing.JTextField;
-
 import com.mysql.jdbc.Connection;
-
 import entities.Director;
 import entities.Elev;
 import utilities.UserFrame;
-
 import javax.swing.JButton;
 
 public class DirectorFrame extends UserFrame {
@@ -36,6 +31,8 @@ public class DirectorFrame extends UserFrame {
 	private Director director;
 	private ArrayList<String> clase;
 	private ArrayList<Elev> elevi;
+	private JButton saveButton;
+	private JButton cancelButton;
 	private AddFrame addFrame;
 	public DirectorFrame(String id,Connection connection) {
 		this.connection=connection;
@@ -58,7 +55,7 @@ public class DirectorFrame extends UserFrame {
 		addLabels();
 
 		addAddButton();
-		addEditButton();
+		addEditButtons();
 		addDeleteButton();
 
 	}
@@ -68,14 +65,83 @@ public class DirectorFrame extends UserFrame {
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		deleteButton.setBounds(298, 312, 111, 34);
 		frame.getContentPane().add(deleteButton);
-	}
+		
+		deleteButton.addActionListener((ActionListener) new ActionListener() {
 
-	private void addEditButton() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	editIsEnabled(false);
+            	director.removeElev(elevi.get(studentSelector.getSelectedIndex()).getId(), connection);
+            	classSelector.setSelectedIndex(0);
+            	undoChanges();
+            	}
+		});
+		
+	}
+    private void editIsEnabled(Boolean b) {
+    	numeTF.setEditable(b);
+		prenumeTF.setEditable(b);
+		clasaTF.setEditable(b);
+		saveButton.setVisible(b);
+		cancelButton.setVisible(b);
+    }
+    private void undoChanges() {
+    	if(elevi.size() !=0 ) {
+    		numeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getNume());
+    		prenumeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getPrenume());
+    		numarMatricolTF.setText(elevi.get(studentSelector.getSelectedIndex()).getId());
+    		clasaTF.setText(classSelector.getSelectedItem().toString());
+    	}
+    	else
+    	{
+    		numeTF.setText("");
+    		prenumeTF.setText("");
+    		numarMatricolTF.setText("");
+    		clasaTF.setText("");
+    	}
+    }
+	private void addEditButtons() {
+		saveButton = new JButton("Save");
+		saveButton.setVisible(false);
+		saveButton.setBounds(105, 357, 111, 39);
+		frame.getContentPane().add(saveButton);
+		
+		saveButton.addActionListener((ActionListener) new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	editIsEnabled(false);
+            	director.updateElev(numeTF.getText(), prenumeTF.getText(), clasaTF.getText(),elevi.get(studentSelector.getSelectedIndex()).getId(), connection);
+            	}
+		});
+		
+		cancelButton = new JButton("Cancel");
+		cancelButton.setVisible(false);
+		cancelButton.setBounds(228, 357, 109, 39);
+		frame.getContentPane().add(cancelButton);
+		
+		cancelButton.addActionListener((ActionListener) new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	editIsEnabled(false);
+            	undoChanges();
+            	}
+		});
+		
 		editButton = new JButton("Edit");
 		editButton.setEnabled(false);
 		editButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		editButton.setBounds(163, 312, 111, 34);
 		frame.getContentPane().add(editButton);
+		
+		editButton.addActionListener((ActionListener) new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	editIsEnabled(true);
+            	}
+		});
 
 	}
 
