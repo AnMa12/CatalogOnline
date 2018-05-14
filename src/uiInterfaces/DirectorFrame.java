@@ -6,8 +6,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
@@ -18,7 +16,6 @@ import javax.swing.JButton;
 
 public class DirectorFrame extends UserFrame {
 
-	//private JFrame frame;
 	private JTextField numeTF;
 	private JTextField prenumeTF;
 	private JTextField numarMatricolTF;
@@ -65,82 +62,82 @@ public class DirectorFrame extends UserFrame {
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		deleteButton.setBounds(298, 312, 111, 34);
 		frame.getContentPane().add(deleteButton);
-		
+
 		deleteButton.addActionListener((ActionListener) new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	editIsEnabled(false);
-            	director.removeElev(elevi.get(studentSelector.getSelectedIndex()).getId(), connection);
-            	classSelector.setSelectedIndex(0);
-            	undoChanges();
-            	}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editIsEnabled(false);
+				director.removeElev(elevi.get(studentSelector.getSelectedIndex()).getId(), connection);
+				classSelector.setSelectedIndex(0);
+				undoChanges();
+			}
 		});
-		
+
 	}
-    private void editIsEnabled(Boolean b) {
-    	numeTF.setEditable(b);
+	private void editIsEnabled(Boolean b) {
+		numeTF.setEditable(b);
 		prenumeTF.setEditable(b);
 		clasaTF.setEditable(b);
 		saveButton.setVisible(b);
 		cancelButton.setVisible(b);
-    }
-    private void undoChanges() {
-    	if(elevi.size() !=0 ) {
-    		numeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getNume());
-    		prenumeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getPrenume());
-    		numarMatricolTF.setText(elevi.get(studentSelector.getSelectedIndex()).getId());
-    		clasaTF.setText(classSelector.getSelectedItem().toString());
-    	}
-    	else
-    	{
-    		numeTF.setText("");
-    		prenumeTF.setText("");
-    		numarMatricolTF.setText("");
-    		clasaTF.setText("");
-    	}
-    }
+	}
+	private void undoChanges() {
+		if(elevi.size() !=0 ) {
+			numeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getNume());
+			prenumeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getPrenume());
+			numarMatricolTF.setText(elevi.get(studentSelector.getSelectedIndex()).getId());
+			clasaTF.setText(classSelector.getSelectedItem().toString());
+		}
+		else
+		{
+			numeTF.setText("");
+			prenumeTF.setText("");
+			numarMatricolTF.setText("");
+			clasaTF.setText("");
+		}
+	}
 	private void addEditButtons() {
 		saveButton = new JButton("Save");
 		saveButton.setVisible(false);
 		saveButton.setBounds(105, 357, 111, 39);
 		frame.getContentPane().add(saveButton);
-		
+
 		saveButton.addActionListener((ActionListener) new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	editIsEnabled(false);
-            	director.updateElev(numeTF.getText(), prenumeTF.getText(), clasaTF.getText(),elevi.get(studentSelector.getSelectedIndex()).getId(), connection);
-            	}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editIsEnabled(false);
+				director.updateElev(numeTF.getText(), prenumeTF.getText(), clasaTF.getText(),elevi.get(studentSelector.getSelectedIndex()).getId(), connection);
+			}
 		});
-		
+
 		cancelButton = new JButton("Cancel");
 		cancelButton.setVisible(false);
 		cancelButton.setBounds(228, 357, 109, 39);
 		frame.getContentPane().add(cancelButton);
-		
+
 		cancelButton.addActionListener((ActionListener) new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	editIsEnabled(false);
-            	undoChanges();
-            	}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editIsEnabled(false);
+				undoChanges();
+			}
 		});
-		
+
 		editButton = new JButton("Edit");
 		editButton.setEnabled(false);
 		editButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		editButton.setBounds(163, 312, 111, 34);
 		frame.getContentPane().add(editButton);
-		
+
 		editButton.addActionListener((ActionListener) new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	editIsEnabled(true);
-            	}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editIsEnabled(true);
+			}
 		});
 
 	}
@@ -152,13 +149,13 @@ public class DirectorFrame extends UserFrame {
 		frame.getContentPane().add(btnAdd);
 		btnAdd.addActionListener( new ActionListener()
 		{
-		    @Override
-		    public void actionPerformed(ActionEvent e)
-		    {
-		        addFrame=new AddFrame(connection);
-		      
-		        addFrame.frame.setVisible(true);
-		    }
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				addFrame=new AddFrame(connection);
+
+				addFrame.frame.setVisible(true);
+			}
 		});
 	}
 
@@ -166,15 +163,16 @@ public class DirectorFrame extends UserFrame {
 		studentSelector = new JComboBox<String>();
 		studentSelector.setBounds(188, 76, 174, 34);
 		frame.getContentPane().add(studentSelector);
-		
-		studentSelector.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent ie){   
-				if (ie.getStateChange() == ItemEvent.SELECTED)
-				{
-					numeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getNume());
-					prenumeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getPrenume());
-					numarMatricolTF.setText(elevi.get(studentSelector.getSelectedIndex()).getId());
-					clasaTF.setText(classSelector.getSelectedItem().toString());
+
+		studentSelector.addActionListener((ActionListener) new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				{   System.out.println("selector clicked, now update");
+				numeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getNume());
+				prenumeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getPrenume());
+				numarMatricolTF.setText(elevi.get(studentSelector.getSelectedIndex()).getId());
+				clasaTF.setText(classSelector.getSelectedItem().toString());
 				}
 			}
 		});
