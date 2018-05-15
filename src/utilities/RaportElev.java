@@ -1,5 +1,6 @@
 package utilities;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +13,8 @@ public interface RaportElev {
 		PreparedStatement  stmt=null;
 		try {
 			stmt = connection.prepareStatement("select n.nota\r\n" + 
-				     "From Note n join Materie m on (n.id_materie=m.id_materie)\r\n" + 
-				     "Where m.denumire=? and n.id_elev=?;");
+					"From Note n join Materie m on (n.id_materie=m.id_materie)\r\n" + 
+					"Where m.denumire=? and n.id_elev=?;");
 			stmt.setString(1, denumire_materie);
 			stmt.setString(2, id);
 			ResultSet rs=stmt.executeQuery();
@@ -30,7 +31,7 @@ public interface RaportElev {
 			e.printStackTrace();
 		}
 		return suma/note.size();
-
+		
 	}
 	default int getNrAbsente (String id, String denumire_materie, Connection connection) {
 		PreparedStatement  stmt=null;
