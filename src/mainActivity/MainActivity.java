@@ -32,12 +32,17 @@ public class MainActivity {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					if(ld.getStatut().equals("2"))
-					userFrame =new StudentFrame(ld.getId(),(Connection) ld.getConnection());
-					else if(ld.getStatut().equals("1"))
-						userFrame =new TeacherFrame(ld.getId(),(Connection) ld.getConnection());
-						else if(ld.getStatut().equals("0"))
-							userFrame =new DirectorFrame(ld.getId(),(Connection) ld.getConnection());
+					if(ld.getStatut().equals("3"))
+						userFrame =new ParentFrame(ld.getId(),(Connection) ld.getConnection());
+					else
+						if(ld.getStatut().equals("2"))
+							userFrame =new StudentFrame(ld.getId(),(Connection) ld.getConnection());
+						else 
+							if(ld.getStatut().equals("1"))
+								userFrame =new TeacherFrame(ld.getId(),(Connection) ld.getConnection());
+							else 
+								if(ld.getStatut().equals("0"))
+									userFrame =new DirectorFrame(ld.getId(),(Connection) ld.getConnection());
 					userFrame.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
