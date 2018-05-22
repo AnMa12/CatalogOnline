@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 
 
 public class StudentFrame extends UserFrame{
-
 	private Connection connection;
 	private Elev elev;
 	private JComboBox<String> selectorMaterie;
@@ -26,6 +25,7 @@ public class StudentFrame extends UserFrame{
 	private JTextField medieTF;
 	private JTextField nrAbsenteTF;
 	private JTextField medieGeneralaTF;
+	private JButton btnOverview;
 	public StudentFrame(String id,Connection connection) {
 		elev=new Elev(id);
 		this.connection=connection;
@@ -45,6 +45,18 @@ public class StudentFrame extends UserFrame{
 		addButtonGetAbsente();
 		addButtonGetNote();
 		addListaRezultat();
+		addOverview();
+		
+	}
+	private void addOverview() {
+		btnOverview = new JButton("Overview");
+		btnOverview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		btnOverview.setBounds(99, 444, 89, 23);
+		frame.getContentPane().add(btnOverview);
 		
 	}
 	private void addTextFieldsforRapoarte() {
