@@ -168,7 +168,7 @@ public class DirectorFrame extends UserFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				{   System.out.println("selector clicked, now update");
+				{  
 				numeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getNume());
 				prenumeTF.setText(elevi.get(studentSelector.getSelectedIndex()).getPrenume());
 				numarMatricolTF.setText(elevi.get(studentSelector.getSelectedIndex()).getId());
