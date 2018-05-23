@@ -1,3 +1,4 @@
+//---cod Ana begin---//
 package entities;
 
 import java.sql.*;
@@ -25,7 +26,7 @@ public class User {
     }
 
 
-    public static void updateParolaBD(String username, String parolaNoua) throws SQLException, ClassNotFoundException {
+    public static void updateParolaBD(String username, char[] parolaNoua) throws SQLException, ClassNotFoundException {
         createConnection();
         System.out.println("Updating parola");
         stmt = conn.createStatement();
@@ -36,7 +37,7 @@ public class User {
         System.out.println("Updated parola");
     }
 
-    public static String getPasswordByUsername(String username) throws SQLException, ClassNotFoundException {
+    public static char[] getPasswordByUsername(String username) throws SQLException, ClassNotFoundException {
         createConnection();
         System.out.println("Cautare parola");
         stmt = conn.createStatement();
@@ -45,14 +46,17 @@ public class User {
                 "WHERE username = '" + username + "' ;";
         ResultSet rs = stmt.executeQuery(sql);
 
-        String parola = "";
+        String str = "";
+        char[] parola= str.toCharArray();
         while(rs.next()){
-            parola = rs.getString("password");
+            parola = rs.getString("password").charAt([0]); //!!problema mare
         }
 
         rs.close();
         stmt.close();
         System.out.println("Parola gasita");
+
         return parola;
     }
 }
+//---cod Ana end---//

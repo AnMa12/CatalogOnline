@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//---cod Ana begin---//
 package uiInterfaces;
 
 import java.awt.event.ActionEvent;
@@ -35,8 +31,6 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextFieldUsername = new javax.swing.JTextField();
-        jTextFieldParolaVeche = new javax.swing.JTextField();
-        jTextFieldParolaNoua = new javax.swing.JTextField();
         labelSchimbaParola = new javax.swing.JLabel();
         labelUsername = new javax.swing.JLabel();
         labelParolaVeche = new javax.swing.JLabel();
@@ -44,16 +38,14 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         btnChangePassword = new javax.swing.JButton();
         labelRepetaParolaNoua = new javax.swing.JLabel();
         labelConfrimare = new javax.swing.JLabel();
-        jTextFieldRepetaParolaNoua = new javax.swing.JTextField();
+        jPasswordFieldParolaVeche = new javax.swing.JPasswordField();
+        jPasswordFieldParolaNoua = new javax.swing.JPasswordField();
+        jPasswordFieldRepetaParolaNoua = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Change password");
 
         jTextFieldUsername.setText("jTextField1");
-
-        jTextFieldParolaVeche.setText("jTextField2");
-
-        jTextFieldParolaNoua.setText("jTextField3");
 
         labelSchimbaParola.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         labelSchimbaParola.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -72,18 +64,22 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         labelConfrimare.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelConfrimare.setText("jLabel6");
 
-        jTextFieldRepetaParolaNoua.setText("jTextField1");
+        jPasswordFieldParolaVeche.setText("jPasswordField1");
+
+        jPasswordFieldParolaNoua.setText("jPasswordField2");
+
+        jPasswordFieldRepetaParolaNoua.setText("jPasswordField3");
 
         btnChangePassword.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 //trebuie sa luam textul din fiecare textField
                 String username = jTextFieldUsername.getText();
-                String parolaVeche = jTextFieldParolaVeche.getText();
-                String parolaNoua = jTextFieldParolaNoua.getText();
-                String parolaNouaRepeta = jTextFieldRepetaParolaNoua.getText();
+                char[] parolaVeche = jPasswordFieldParolaVeche.getPassword();
+                char[] parolaNoua = jPasswordFieldParolaNoua.getPassword();
+                char[] parolaNouaRepeta = jPasswordFieldRepetaParolaNoua.getPassword();;
 
                 //trebuie sa vedem daca username-ul si parola sunt ca in baza de date
-                String parolaBD = null;
+                char[] parolaBD = null;
                 try {
                     parolaBD = getPasswordByUsername(username);
                 } catch (SQLException e) {
@@ -122,6 +118,7 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(109, 109, 109)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,12 +127,11 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                                                         .addComponent(labelUsername)
                                                         .addComponent(labelParolaVeche))
                                                 .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jTextFieldParolaVeche, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jTextFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jTextFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                                                        .addComponent(jPasswordFieldParolaVeche, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                        .addComponent(jPasswordFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                                        .addComponent(jPasswordFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
                                 .addGap(102, 102, 102))
                         .addComponent(labelConfrimare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -149,17 +145,17 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                                         .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(labelUsername))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextFieldParolaVeche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelParolaVeche))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(labelParolaVeche)
+                                        .addComponent(jPasswordFieldParolaVeche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelParolaNoua))
+                                        .addComponent(labelParolaNoua)
+                                        .addComponent(jPasswordFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(labelRepetaParolaNoua)
-                                        .addComponent(jTextFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jPasswordFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -167,7 +163,6 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        labelRepetaParolaNoua.getAccessibleContext().setAccessibleName("Repeta parola");
         labelRepetaParolaNoua.getAccessibleContext().setAccessibleDescription("");
         labelConfrimare.getAccessibleContext().setAccessibleName("labelConfrimare");
 
@@ -210,10 +205,11 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
+
     private javax.swing.JButton btnChangePassword;
-    private javax.swing.JTextField jTextFieldParolaNoua;
-    private javax.swing.JTextField jTextFieldParolaVeche;
-    private javax.swing.JTextField jTextFieldRepetaParolaNoua;
+    private javax.swing.JPasswordField jPasswordFieldParolaVeche;
+    private javax.swing.JPasswordField jPasswordFieldParolaNoua;
+    private javax.swing.JPasswordField jPasswordFieldRepetaParolaNoua;
     private javax.swing.JTextField jTextFieldUsername;
     private javax.swing.JLabel labelConfrimare;
     private javax.swing.JLabel labelParolaNoua;
@@ -223,3 +219,4 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelUsername;
     // End of variables declaration
 }
+//---cod Ana end---//

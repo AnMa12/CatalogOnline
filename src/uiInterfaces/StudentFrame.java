@@ -48,17 +48,81 @@ public class StudentFrame extends UserFrame{
 		addOverview();
 		
 	}
+
+	//---cod Ana begin---//
+	public static String getClasaByIdElev(int idElev) throws SQLException {
+		stmt = conn.createStatement();
+		String sql = "SELECT nume_clasa\n" +
+				"        FROM elev\n" +
+				"        WHERE ID_ELEV = " + idElev + ";";
+		ResultSet rs = stmt.executeQuery(sql);
+		String numeClasa = "";
+		while(rs.next()) {
+			numeClasa = numeClasa + rs.getString("nume_clasa");
+		}
+
+		rs.close();
+		return numeClasa;
+	}
+
+	public static double medieClasa (String numeClasa) throws SQLException {
+		//trebuie luate toate notele elevilor dintr-o clasa
+		//STEP 4: Execute a query
+		stmt = conn.createStatement();
+		String sql = "SELECT AVG(n.nota) FROM note n WHERE id_elev " +
+				"IN ( SELECT e.ID_ELEV FROM elev e WHERE nume_clasa = '" + numeClasa + "');" ;
+		ResultSet rs = stmt.executeQuery(sql);
+		double medieClasa = 0;
+		while(rs.next()) {
+			medieClasa = rs.getInt("AVG(n.nota)");
+		}
+
+		rs.close();
+		return medieClasa;
+	}
+
+	public static double getMedieElevByID(int ID_ELEV) throws SQLException {
+		//metoda returneaza media + notele
+		//cautam in tabela de note doar notele care au la ID_ELEV elevul dorit, si facem media cu ele
+		stmt = conn.createStatement();
+		String sql = "SELECT nota, ID_ELEV FROM note";
+		ResultSet rs = stmt.executeQuery(sql);
+		//in acelasi timp calculam si media
+		int numarNote = 0;
+		int sumaNote = 0;
+
+		while(rs.next()){
+			//Retrieve by column name
+			int nota  = rs.getInt("nota");
+			int idElev = rs.getInt("ID_ELEV");
+
+			if(idElev == ID_ELEV) {
+				numarNote ++;
+				sumaNote += nota;
+			}
+		}
+		rs.close();
+
+		double medie = 0;
+		if(numarNote != 0) {
+			medie = sumaNote/numarNote;
+		}
+		return medie;
+	}
+
 	private void addOverview() {
 		btnOverview = new JButton("Overview");
 		btnOverview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//aici o sa scriu eu
+				//aici vreau sa fie calculate: media clasei in care este elevul
+				//+ media elevului => am nevoie de id-ul elevului
 			}
 		});
 		btnOverview.setBounds(99, 444, 89, 23);
 		frame.getContentPane().add(btnOverview);
-		
 	}
+	//---cod Ana end---//
+
 	private void addTextFieldsforRapoarte() {
 		medieTF = new JTextField();
 		medieTF.setEditable(false);
