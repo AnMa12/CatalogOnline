@@ -8,6 +8,8 @@ import entities.Nota;
 import utilities.UserFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -52,9 +54,9 @@ public class StudentFrame extends UserFrame{
 	//---cod Ana begin---//
 	public static String getClasaByIdElev(int idElev) throws SQLException {
 		stmt = conn.createStatement();
-		String sql = "SELECT nume_clasa\n" +
-				"        FROM elev\n" +
-				"        WHERE ID_ELEV = " + idElev + ";";
+		String sql = "SELECT clasa\n" +
+				     "FROM Elev\n" +
+				     "WHERE id_elev = " + idElev +";";
 		ResultSet rs = stmt.executeQuery(sql);
 		String numeClasa = "";
 		while(rs.next()) {
@@ -69,8 +71,10 @@ public class StudentFrame extends UserFrame{
 		//trebuie luate toate notele elevilor dintr-o clasa
 		//STEP 4: Execute a query
 		stmt = conn.createStatement();
-		String sql = "SELECT AVG(n.nota) FROM note n WHERE id_elev " +
-				"IN ( SELECT e.ID_ELEV FROM elev e WHERE nume_clasa = '" + numeClasa + "');" ;
+		String sql = "SELECT AVG(n.nota)\n" +
+				     "FROM Note n JOIN Elev e\n" +
+				     "ON e.id_elev = n.id_elev\n" +
+				     "WHERE e.clasa = '" + numeClasa + "';" ;
 		ResultSet rs = stmt.executeQuery(sql);
 		double medieClasa = 0;
 		while(rs.next()) {
@@ -85,7 +89,7 @@ public class StudentFrame extends UserFrame{
 		//metoda returneaza media + notele
 		//cautam in tabela de note doar notele care au la ID_ELEV elevul dorit, si facem media cu ele
 		stmt = conn.createStatement();
-		String sql = "SELECT nota, ID_ELEV FROM note";
+		String sql = "SELECT nota, id_elev FROM Note;";
 		ResultSet rs = stmt.executeQuery(sql);
 		//in acelasi timp calculam si media
 		int numarNote = 0;
@@ -116,6 +120,8 @@ public class StudentFrame extends UserFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				//aici vreau sa fie calculate: media clasei in care este elevul
 				//+ media elevului => am nevoie de id-ul elevului
+				Double medieElev = getMedieElevByID(?? id elev curent ??);
+				Double medieClasaElev = medieClasa(getClasaByIdElev(?? id elev curent ??));
 			}
 		});
 		btnOverview.setBounds(99, 444, 89, 23);

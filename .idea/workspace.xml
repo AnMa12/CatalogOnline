@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dd341dc-5d2e-4c7e-9793-733278f45b3f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/uiInterfaces/ChangePasswordFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/uiInterfaces/ChangePasswordFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/uiInterfaces/OverviewFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/uiInterfaces/StudentFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/uiInterfaces/StudentFrame.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,8 +33,25 @@
       <file leaf-file-name="StudentFrame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/uiInterfaces/StudentFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+            <state relative-caret-position="71">
+              <caret line="122" column="16" selection-start-line="122" selection-start-column="16" selection-end-line="122" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OverviewFrame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/uiInterfaces/OverviewFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="254">
+              <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+              <folding>
+                <element signature="e#422#423#0" expanded="true" />
+                <element signature="e#454#455#0" expanded="true" />
+                <element signature="e#675#705#0" expanded="true" />
+                <element signature="e#3868#3955#0" expanded="true" />
+                <element signature="e#5436#5437#0" expanded="true" />
+                <element signature="e#5504#5505#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,6 +109,7 @@
         <option value="$PROJECT_DIR$/src/uiInterfaces/LoginFrame.java" />
         <option value="$PROJECT_DIR$/src/entities/User.java" />
         <option value="$PROJECT_DIR$/src/uiInterfaces/ChangePasswordFrame.java" />
+        <option value="$PROJECT_DIR$/src/uiInterfaces/OverviewFrame.java" />
         <option value="$PROJECT_DIR$/src/uiInterfaces/StudentFrame.java" />
       </list>
     </option>
@@ -376,10 +393,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/uiInterfaces/OverviewFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+          <folding>
+            <element signature="e#422#423#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+            <element signature="e#675#705#0" expanded="true" />
+            <element signature="e#3868#3955#0" expanded="true" />
+            <element signature="e#5436#5437#0" expanded="true" />
+            <element signature="e#5504#5505#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/uiInterfaces/StudentFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+        <state relative-caret-position="71">
+          <caret line="122" column="16" selection-start-line="122" selection-start-column="16" selection-end-line="122" selection-end-column="16" />
         </state>
       </provider>
     </entry>
