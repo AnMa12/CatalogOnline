@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="CatalogOnline">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jgoodies-forms-1.8.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jcalendar-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jgoodies-forms-1.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

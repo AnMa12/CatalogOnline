@@ -52,7 +52,7 @@ public class StudentFrame extends UserFrame{
 		btnOverview = new JButton("Overview");
 		btnOverview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				//aici o sa scriu eu
 			}
 		});
 		btnOverview.setBounds(99, 444, 89, 23);
