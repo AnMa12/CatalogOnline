@@ -9,7 +9,15 @@ public class OverviewFrame extends javax.swing.JFrame {
     /**
      * Creates new form OveraviewFrame
      */
-    public OverviewFrame() {
+
+    private double medieElevVal;
+    private double medieClasaVal;
+    private String prenumeElev;
+
+    public OverviewFrame(double medieElev, double medieClasaElev, String prenumeElev) {
+        this.medieElevVal = medieElev;
+        this.medieClasaVal = medieClasaElev;
+        this.prenumeElev = prenumeElev;
         initComponents();
     }
 
@@ -27,22 +35,42 @@ public class OverviewFrame extends javax.swing.JFrame {
         medieClasa = new javax.swing.JLabel();
         overview = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Overview");
 
-        mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        mesajOverview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        mesajOverview.setText("Felicitari!");
+        if(medieElevVal >= medieClasaVal) {
+            //System.out.println(medieElevVal + " " + medieClasaVal);
 
-        medieElev.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        medieElev.setText("Media ta este de: ??");
+            mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+            mesajOverview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            mesajOverview.setText("Felicitari" + prenumeElev + "!");
 
-        medieClasa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        medieClasa.setText("Media clasei tale este de: ??");
+            medieElev.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            medieElev.setText("Media ta este: " + medieElevVal);
 
-        overview.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        overview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        overview.setText("Esti peste nivelul clasei tale.");
+            medieClasa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            medieClasa.setText("Media clasei tale este: " + medieClasaVal);
+
+            overview.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+            overview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            overview.setText("Esti peste nivelul clasei tale.");
+        } else {
+            //System.out.println(medieElevVal + " " + medieClasaVal);
+
+            mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+            mesajOverview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            mesajOverview.setText("Invata mai mult, " + prenumeElev + "!");
+
+            medieElev.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            medieElev.setText("Media ta este: " + medieElevVal);
+
+            medieClasa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            medieClasa.setText("Media clasei tale este : " + medieClasaVal);
+
+            overview.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+            overview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            overview.setText("Esti sub nivelul clasei tale.");
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,44 +101,6 @@ public class OverviewFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OverviewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OverviewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OverviewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OverviewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OverviewFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify
     private javax.swing.JLabel medieClasa;

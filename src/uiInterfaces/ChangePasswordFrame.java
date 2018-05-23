@@ -3,10 +3,10 @@ package uiInterfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.SQLException;
-
-import static entities.User.getPasswordByUsername;
-import static entities.User.updateParolaBD;
+import java.sql.Statement;
+import java.util.Arrays;
 
 /**
  *
@@ -14,10 +14,28 @@ import static entities.User.updateParolaBD;
  */
 public class ChangePasswordFrame extends javax.swing.JFrame {
 
+    private Connection conn;
+    private Statement stmt;
+    private String statut;
+    private String username;
+
+    public void updateParolaBD(String username, char[] parolaNoua) throws SQLException, ClassNotFoundException {
+        System.out.println("Updating parola");
+        stmt = conn.createStatement();
+        String sql = "UPDATE LoginData\n" +
+                "SET password = '" + parolaNoua +
+                "' WHERE username = '" + username + "';";
+        stmt.executeUpdate(sql);
+        System.out.println("Updated parola");
+    }
+
     /**
      * Creates new form ChangePasswordFrame
      */
-    public ChangePasswordFrame() {
+    public ChangePasswordFrame(Connection conn, String username, String statut) {
+        this.conn = conn;
+        this.statut = statut;
+        this.username = username;
         initComponents();
     }
 
@@ -30,30 +48,20 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jTextFieldUsername = new javax.swing.JTextField();
         labelSchimbaParola = new javax.swing.JLabel();
-        labelUsername = new javax.swing.JLabel();
-        labelParolaVeche = new javax.swing.JLabel();
         labelParolaNoua = new javax.swing.JLabel();
         btnChangePassword = new javax.swing.JButton();
         labelRepetaParolaNoua = new javax.swing.JLabel();
         labelConfrimare = new javax.swing.JLabel();
-        jPasswordFieldParolaVeche = new javax.swing.JPasswordField();
         jPasswordFieldParolaNoua = new javax.swing.JPasswordField();
         jPasswordFieldRepetaParolaNoua = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Change password");
-
-        jTextFieldUsername.setText("jTextField1");
 
         labelSchimbaParola.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         labelSchimbaParola.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelSchimbaParola.setText("Schimba parola");
-
-        labelUsername.setText("Username");
-
-        labelParolaVeche.setText("Parola veche");
 
         labelParolaNoua.setText("Parola noua");
 
@@ -62,50 +70,38 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         labelRepetaParolaNoua.setText("Repeta parola");
 
         labelConfrimare.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelConfrimare.setText("jLabel6");
+        labelConfrimare.setText("---------");
 
-        jPasswordFieldParolaVeche.setText("jPasswordField1");
+        jPasswordFieldParolaNoua.setText("");
 
-        jPasswordFieldParolaNoua.setText("jPasswordField2");
-
-        jPasswordFieldRepetaParolaNoua.setText("jPasswordField3");
+        jPasswordFieldRepetaParolaNoua.setText("");
 
         btnChangePassword.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 //trebuie sa luam textul din fiecare textField
-                String username = jTextFieldUsername.getText();
-                char[] parolaVeche = jPasswordFieldParolaVeche.getPassword();
+                //char[] parolaVeche = jPasswordFieldParolaVeche.getPassword();
                 char[] parolaNoua = jPasswordFieldParolaNoua.getPassword();
-                char[] parolaNouaRepeta = jPasswordFieldRepetaParolaNoua.getPassword();;
+                char[] parolaNouaRepeta = jPasswordFieldRepetaParolaNoua.getPassword();
 
-                //trebuie sa vedem daca username-ul si parola sunt ca in baza de date
-                char[] parolaBD = null;
-                try {
-                    parolaBD = getPasswordByUsername(username);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if(parolaVeche.equals(parolaBD)) {
-                    //trebuie sa vedem daca parola noua = repetare parola noua
-                    if(parolaNoua.equals(parolaNouaRepeta)){
-                        //trebuie sa facem update pe baza de date si sa dam mesaj: parola sch succes!
-                        try {
-                            updateParolaBD(username,parolaNoua);
-                            labelConfrimare.setText("SUCCESS: Parola schimbata!");
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                            labelConfrimare.setText("ERROR: Update esuat!");
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                            labelConfrimare.setText("ERROR: Update esuat!");
-                        }
-                    } else {
-                        labelConfrimare.setText("ERROR: Parola noua repetata incorect!");
+                /*//trebuie sa vedem daca username-ul si parola sunt ca in baza de date
+                LoginDatabase loginDatabase = LoginDatabase.getAccess(username, parolaVeche);
+                System.out.println(username + parolaVeche);
+                if(loginDatabase.getConnection() == null)
+                    JOptionPane.showMessageDialog(null, "Userul sau parola este gresita!");
+                else {conn = loginDatabase.getConnection();}*/
+
+                //trebuie sa vedem daca parola noua = repetare parola noua
+                if (Arrays.equals(parolaNoua, parolaNouaRepeta)) {
+                    //trebuie sa facem update pe baza de date si sa dam mesaj: parola sch succes!
+                    try {
+                        updateParolaBD(username, parolaNoua);
+                        labelConfrimare.setText("SUCCESS: Parola schimbata!");
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                        labelConfrimare.setText("ERROR: Update error!");
                     }
-                } else {
-                    labelConfrimare.setText("ERROR: Username sau parola veche incorecte!");
+                } else{
+                    labelConfrimare.setText("ERROR: Parola noua repetata incorect!");
                 }
             }
         });
@@ -115,25 +111,24 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(labelSchimbaParola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(labelConfrimare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
                                 .addGap(109, 109, 109)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(labelParolaNoua)
-                                                        .addComponent(labelRepetaParolaNoua)
-                                                        .addComponent(labelUsername)
-                                                        .addComponent(labelParolaVeche))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                                .addComponent(labelRepetaParolaNoua))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(labelParolaNoua)
+                                                                .addGap(0, 0, Short.MAX_VALUE)))
                                                 .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                                                        .addComponent(jPasswordFieldParolaVeche, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                                        .addComponent(jPasswordFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                                        .addComponent(jPasswordFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPasswordFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jPasswordFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(102, 102, 102))
-                        .addComponent(labelConfrimare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,25 +137,17 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                                 .addComponent(labelSchimbaParola, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelUsername))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(labelParolaVeche)
-                                        .addComponent(jPasswordFieldParolaVeche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(labelParolaNoua)
                                         .addComponent(jPasswordFieldParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(labelRepetaParolaNoua)
                                         .addComponent(jPasswordFieldRepetaParolaNoua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(labelConfrimare)
-                                .addContainerGap(51, Short.MAX_VALUE))
+                                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         labelRepetaParolaNoua.getAccessibleContext().setAccessibleDescription("");
@@ -169,54 +156,13 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChangePasswordFrame().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify
-
     private javax.swing.JButton btnChangePassword;
-    private javax.swing.JPasswordField jPasswordFieldParolaVeche;
     private javax.swing.JPasswordField jPasswordFieldParolaNoua;
     private javax.swing.JPasswordField jPasswordFieldRepetaParolaNoua;
-    private javax.swing.JTextField jTextFieldUsername;
     private javax.swing.JLabel labelConfrimare;
     private javax.swing.JLabel labelParolaNoua;
-    private javax.swing.JLabel labelParolaVeche;
     private javax.swing.JLabel labelRepetaParolaNoua;
     private javax.swing.JLabel labelSchimbaParola;
-    private javax.swing.JLabel labelUsername;
-    // End of variables declaration
 }
 //---cod Ana end---//
