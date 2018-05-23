@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
+import javax.swing.JPasswordField;
+
 /**
  *
  * @author Sclav
@@ -23,8 +25,8 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         System.out.println("Updating parola");
         stmt = conn.createStatement();
         String sql = "UPDATE LoginData\n" +
-                "SET password = '" + parolaNoua +
-                "' WHERE username = '" + username + "';";
+                "SET password = SHA1('" + new String(parolaNoua) +
+                "') WHERE username = '" + username + "';";
         stmt.executeUpdate(sql);
         System.out.println("Updated parola");
     }
@@ -158,7 +160,7 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify
     private javax.swing.JButton btnChangePassword;
-    private javax.swing.JPasswordField jPasswordFieldParolaNoua;
+    private JPasswordField jPasswordFieldParolaNoua;
     private javax.swing.JPasswordField jPasswordFieldRepetaParolaNoua;
     private javax.swing.JLabel labelConfrimare;
     private javax.swing.JLabel labelParolaNoua;
