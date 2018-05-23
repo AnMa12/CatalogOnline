@@ -23,6 +23,7 @@ public class LoginFrame {
 	private JLabel lblPassword;
 	private JButton button;
 	private LoginDatabase loginDatabase;
+	private JButton btnChangePassword;
 	
     
 	public LoginFrame() {
@@ -43,7 +44,7 @@ public class LoginFrame {
 		button.setBackground(Color.WHITE);
 		button.setForeground(Color.BLACK);
 		button.setFont(new Font("Arial", Font.BOLD, 22));
-		button.setBounds(158, 168, 115, 35);
+		button.setBounds(68, 171, 115, 35);
 		frame.getContentPane().add(button);
 		
 		
@@ -69,6 +70,25 @@ public class LoginFrame {
 		lblPassword.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 17));
 		lblPassword.setBounds(23, 119, 115, 28);
 		frame.getContentPane().add(lblPassword);
+
+		//---cod Ana begin---//
+		btnChangePassword = new JButton("Change password...");
+		btnChangePassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//se deschide un frame, unde este un label pentru
+				// username, parola actuala, si pentru noua parol,
+				// si un buton de change + label pt mesaj: schimbat cu succes!
+				ChangePasswordFrame changePassword = new ChangePasswordFrame();
+				changePassword.setVisible(true);
+			}
+		});
+		//---cod Ana end---//
+
+		btnChangePassword.setForeground(Color.BLACK);
+		btnChangePassword.setFont(new Font("Arial", Font.BOLD, 13));
+		btnChangePassword.setBackground(Color.WHITE);
+		btnChangePassword.setBounds(203, 171, 157, 35);
+		frame.getContentPane().add(btnChangePassword);
 		
 		button.addActionListener((ActionListener) new ActionListener() {
 

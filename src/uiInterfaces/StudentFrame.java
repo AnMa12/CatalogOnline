@@ -8,6 +8,8 @@ import entities.Nota;
 import utilities.UserFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,7 +20,6 @@ import javax.swing.JTextField;
 
 
 public class StudentFrame extends UserFrame{
-
 	private Connection connection;
 	private Elev elev;
 	private JComboBox<String> selectorMaterie;
@@ -26,6 +27,7 @@ public class StudentFrame extends UserFrame{
 	private JTextField medieTF;
 	private JTextField nrAbsenteTF;
 	private JTextField medieGeneralaTF;
+	private JButton btnOverview;
 	public StudentFrame(String id,Connection connection) {
 		elev=new Elev(id);
 		this.connection=connection;
@@ -45,8 +47,88 @@ public class StudentFrame extends UserFrame{
 		addButtonGetAbsente();
 		addButtonGetNote();
 		addListaRezultat();
+		addOverview();
 		
 	}
+
+	//---cod Ana begin---//
+	public static String getClasaByIdElev(int idElev) throws SQLException {
+		stmt = conn.createStatement();
+		String sql = "SELECT clasa\n" +
+				     "FROM Elev\n" +
+				     "WHERE id_elev = " + idElev +";";
+		ResultSet rs = stmt.executeQuery(sql);
+		String numeClasa = "";
+		while(rs.next()) {
+			numeClasa = numeClasa + rs.getString("nume_clasa");
+		}
+
+		rs.close();
+		return numeClasa;
+	}
+
+	public static double medieClasa (String numeClasa) throws SQLException {
+		//trebuie luate toate notele elevilor dintr-o clasa
+		//STEP 4: Execute a query
+		stmt = conn.createStatement();
+		String sql = "SELECT AVG(n.nota)\n" +
+				     "FROM Note n JOIN Elev e\n" +
+				     "ON e.id_elev = n.id_elev\n" +
+				     "WHERE e.clasa = '" + numeClasa + "';" ;
+		ResultSet rs = stmt.executeQuery(sql);
+		double medieClasa = 0;
+		while(rs.next()) {
+			medieClasa = rs.getInt("AVG(n.nota)");
+		}
+
+		rs.close();
+		return medieClasa;
+	}
+
+	public static double getMedieElevByID(int ID_ELEV) throws SQLException {
+		//metoda returneaza media + notele
+		//cautam in tabela de note doar notele care au la ID_ELEV elevul dorit, si facem media cu ele
+		stmt = conn.createStatement();
+		String sql = "SELECT nota, id_elev FROM Note;";
+		ResultSet rs = stmt.executeQuery(sql);
+		//in acelasi timp calculam si media
+		int numarNote = 0;
+		int sumaNote = 0;
+
+		while(rs.next()){
+			//Retrieve by column name
+			int nota  = rs.getInt("nota");
+			int idElev = rs.getInt("ID_ELEV");
+
+			if(idElev == ID_ELEV) {
+				numarNote ++;
+				sumaNote += nota;
+			}
+		}
+		rs.close();
+
+		double medie = 0;
+		if(numarNote != 0) {
+			medie = sumaNote/numarNote;
+		}
+		return medie;
+	}
+
+	private void addOverview() {
+		btnOverview = new JButton("Overview");
+		btnOverview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//aici vreau sa fie calculate: media clasei in care este elevul
+				//+ media elevului => am nevoie de id-ul elevului
+				Double medieElev = getMedieElevByID(?? id elev curent ??);
+				Double medieClasaElev = medieClasa(getClasaByIdElev(?? id elev curent ??));
+			}
+		});
+		btnOverview.setBounds(99, 444, 89, 23);
+		frame.getContentPane().add(btnOverview);
+	}
+	//---cod Ana end---//
+
 	private void addTextFieldsforRapoarte() {
 		medieTF = new JTextField();
 		medieTF.setEditable(false);
