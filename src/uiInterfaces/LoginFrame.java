@@ -78,8 +78,16 @@ public class LoginFrame {
 				//se deschide un frame, unde este un label pentru
 				// username, parola actuala, si pentru noua parol,
 				// si un buton de change + label pt mesaj: schimbat cu succes!
-				ChangePasswordFrame changePassword = new ChangePasswordFrame();
-				changePassword.setVisible(true);
+				loginDatabase=LoginDatabase.getAccess(textField.getText(),passwordField.getPassword());
+				if(loginDatabase.getConnection()==null)
+					JOptionPane.showMessageDialog(null, "Userul sau parola este gresita!");
+				else
+				{
+					ChangePasswordFrame changePassword = new ChangePasswordFrame(loginDatabase.getConnection(),
+																				 textField.getText(),
+																				 loginDatabase.getStatut());
+					changePassword.setVisible(true);
+				}
 			}
 		});
 		//---cod Ana end---//

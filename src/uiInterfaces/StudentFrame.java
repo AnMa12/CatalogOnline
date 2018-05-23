@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -48,29 +49,28 @@ public class StudentFrame extends UserFrame{
 		addButtonGetNote();
 		addListaRezultat();
 		addOverview();
-		
 	}
 
 	//---cod Ana begin---//
-	public static String getClasaByIdElev(int idElev) throws SQLException {
-		stmt = conn.createStatement();
+	public String getClasaByIdElev(int idElev) throws SQLException {
+		Statement stmt = connection.createStatement();
 		String sql = "SELECT clasa\n" +
 				     "FROM Elev\n" +
 				     "WHERE id_elev = " + idElev +";";
 		ResultSet rs = stmt.executeQuery(sql);
 		String numeClasa = "";
 		while(rs.next()) {
-			numeClasa = numeClasa + rs.getString("nume_clasa");
+			numeClasa = numeClasa + rs.getString("clasa");
 		}
 
 		rs.close();
 		return numeClasa;
 	}
 
-	public static double medieClasa (String numeClasa) throws SQLException {
+	public double medieClasa (String numeClasa) throws SQLException {
 		//trebuie luate toate notele elevilor dintr-o clasa
 		//STEP 4: Execute a query
-		stmt = conn.createStatement();
+		Statement stmt = connection.createStatement();
 		String sql = "SELECT AVG(n.nota)\n" +
 				     "FROM Note n JOIN Elev e\n" +
 				     "ON e.id_elev = n.id_elev\n" +
@@ -85,10 +85,10 @@ public class StudentFrame extends UserFrame{
 		return medieClasa;
 	}
 
-	public static double getMedieElevByID(int ID_ELEV) throws SQLException {
+	public double getMedieElevByID(int ID_ELEV) throws SQLException {
 		//metoda returneaza media + notele
 		//cautam in tabela de note doar notele care au la ID_ELEV elevul dorit, si facem media cu ele
-		stmt = conn.createStatement();
+		Statement stmt = connection.createStatement();
 		String sql = "SELECT nota, id_elev FROM Note;";
 		ResultSet rs = stmt.executeQuery(sql);
 		//in acelasi timp calculam si media
@@ -120,8 +120,22 @@ public class StudentFrame extends UserFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				//aici vreau sa fie calculate: media clasei in care este elevul
 				//+ media elevului => am nevoie de id-ul elevului
-				Double medieElev = getMedieElevByID(?? id elev curent ??);
-				Double medieClasaElev = medieClasa(getClasaByIdElev(?? id elev curent ??));
+				double medieElev = 0, medieClasaElev = 0;
+				try {
+					medieElev = getMedieElevByID(Integer.parseInt(elev.getId()));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				try {
+					medieClasaElev = medieClasa(getClasaByIdElev(Integer.parseInt(elev.getId())));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				//System.out.println(medieElev + "*" + medieClasaElev);
+				System.out.println(elev.getNume());
+				OverviewFrame overviewFrm = new OverviewFrame(medieElev,medieClasaElev,elev.getPrenume());
+				overviewFrm.setVisible(true);
 			}
 		});
 		btnOverview.setBounds(99, 444, 89, 23);
