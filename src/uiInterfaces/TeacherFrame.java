@@ -42,8 +42,8 @@ public class TeacherFrame extends UserFrame{
 	private JButton btnCalculeazaMediaClasei;
 	private JTextField medieTF;
 	private JTextField nrAbsenteTF;
-	public TeacherFrame(String id,Connection connection) {
-		profesor=new Profesor(id);
+	public TeacherFrame(String id,String nume,String prenume,Connection connection) {
+		profesor=new Profesor(id,nume,prenume);
 		this.connection=connection;
 		initialize();
 	}

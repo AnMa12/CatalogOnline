@@ -9,9 +9,12 @@ import utilities.ReadParinte;
 public class Parinte implements ReadParinte{
 	private ArrayList<Elev> elevi;
 	private String id;
-	
-	public Parinte(String id,Connection connection) {
+	private String nume;
+	private String prenume;
+	public Parinte(String id,String nume,String prenume,Connection connection) {
 		setId(id);
+		this.nume = nume;
+		this.prenume = prenume;
 		elevi = this.getElevi(id, connection);
 	}
 	public ArrayList<Elev> getElevi() {
@@ -25,5 +28,11 @@ public class Parinte implements ReadParinte{
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getNume() {
+		return nume;
+	}
+	public String getPrenume() {
+		return prenume;
 	}
 }

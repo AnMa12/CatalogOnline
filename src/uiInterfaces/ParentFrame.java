@@ -27,8 +27,8 @@ public class ParentFrame extends UserFrame{
 	private JComboBox<String> selectorElev;
 	private List listaRezultat;
 	private Connection connection;
-	public ParentFrame(String id,Connection connection) {
-		parinte = new Parinte(id,connection);
+	public ParentFrame(String id,String nume,String prenume,Connection connection) {
+		parinte = new Parinte(id,nume,prenume,connection);
 		this.connection = connection;
 		initialize();
 	}

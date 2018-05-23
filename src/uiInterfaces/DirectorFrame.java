@@ -31,9 +31,9 @@ public class DirectorFrame extends UserFrame {
 	private JButton saveButton;
 	private JButton cancelButton;
 	private AddFrame addFrame;
-	public DirectorFrame(String id,Connection connection) {
+	public DirectorFrame(String id,String nume,String prenume,Connection connection) {
 		this.connection=connection;
-		director =new Director(id);
+		director =new Director(id,nume,prenume);
 		initialize();
 	}
 

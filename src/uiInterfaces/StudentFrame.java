@@ -29,8 +29,8 @@ public class StudentFrame extends UserFrame{
 	private JTextField nrAbsenteTF;
 	private JTextField medieGeneralaTF;
 	private JButton btnOverview;
-	public StudentFrame(String id,Connection connection) {
-		elev=new Elev(id);
+	public StudentFrame(String id,String nume,String prenume,Connection connection) {
+		elev=new Elev(id,nume,prenume);
 		this.connection=connection;
 		initialize();
 	}
@@ -51,7 +51,6 @@ public class StudentFrame extends UserFrame{
 		addOverview();
 	}
 
-	//---cod Ana begin---//
 	public String getClasaByIdElev(int idElev) throws SQLException {
 		Statement stmt = connection.createStatement();
 		String sql = "SELECT clasa\n" +
@@ -141,7 +140,6 @@ public class StudentFrame extends UserFrame{
 		btnOverview.setBounds(99, 444, 89, 23);
 		frame.getContentPane().add(btnOverview);
 	}
-	//---cod Ana end---//
 
 	private void addTextFieldsforRapoarte() {
 		medieTF = new JTextField();
