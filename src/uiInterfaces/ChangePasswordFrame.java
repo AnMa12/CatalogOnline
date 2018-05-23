@@ -5,12 +5,12 @@
  */
 package uiInterfaces;
 
-import loginDatabase.LoginDatabase;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
+import java.sql.SQLException;
+
+import static entities.User.getPasswordByUsername;
+import static entities.User.updateParolaBD;
 
 /**
  *
@@ -23,37 +23,6 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
      */
     public ChangePasswordFrame() {
         initComponents();
-    }
-
-    void updateParolaBD(String username, String parolaNoua) {
-        LoginDatabase lDB = new LoginDatabase();
-
-        System.out.println("Updating parola");
-        stmt = conn.createStatement();
-        String sql = "UPDATE LoginData\n" +
-                "SET password = " + parolaNoua +
-                "WHERE username = " + username + ";";
-        stmt.executeUpdate(sql);
-        System.out.println("Updated parola");
-    }
-
-    String getPasswordByUsername(String username) {
-        System.out.println("Cautare parola");
-        stmt = conn.createStatement();
-        String sql = "SELECT password\n" +
-                "FROM LoginData\n" +
-                "WHERE username =" + username + ";";
-        ResultSet rs = stmt.executeQuery(sql);
-
-        String parola = "";
-        while(rs.next()){
-            parola = rs.getString("password");
-        }
-
-        rs.close();
-        stmt.close();
-        System.out.println("Parola gasita");
-        return parola;
     }
 
     /**
@@ -72,17 +41,19 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         labelUsername = new javax.swing.JLabel();
         labelParolaVeche = new javax.swing.JLabel();
         labelParolaNoua = new javax.swing.JLabel();
+        btnChangePassword = new javax.swing.JButton();
         labelRepetaParolaNoua = new javax.swing.JLabel();
         labelConfrimare = new javax.swing.JLabel();
         jTextFieldRepetaParolaNoua = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Change password");
 
-        /*jTextFieldUsername.setText("");
-        jTextFieldParolaVeche.setText("");
-        jTextFieldParolaNoua.setText("");
-        jTextFieldRepetaParolaNoua.setText("");*/
+        jTextFieldUsername.setText("jTextField1");
+
+        jTextFieldParolaVeche.setText("jTextField2");
+
+        jTextFieldParolaNoua.setText("jTextField3");
 
         labelSchimbaParola.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         labelSchimbaParola.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -99,9 +70,10 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
         labelRepetaParolaNoua.setText("Repeta parola");
 
         labelConfrimare.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelConfrimare.setText("");
+        labelConfrimare.setText("jLabel6");
 
-        btnChangePassword = new javax.swing.JButton();
+        jTextFieldRepetaParolaNoua.setText("jTextField1");
+
         btnChangePassword.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 //trebuie sa luam textul din fiecare textField
@@ -111,16 +83,30 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                 String parolaNouaRepeta = jTextFieldRepetaParolaNoua.getText();
 
                 //trebuie sa vedem daca username-ul si parola sunt ca in baza de date
-                String parolaBD = getPasswordByUsername(username);
+                String parolaBD = null;
+                try {
+                    parolaBD = getPasswordByUsername(username);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
                 if(parolaVeche.equals(parolaBD)) {
                     //trebuie sa vedem daca parola noua = repetare parola noua
                     if(parolaNoua.equals(parolaNouaRepeta)){
                         //trebuie sa facem update pe baza de date si sa dam mesaj: parola sch succes!
-                        updateParolaBD(username,parolaNoua);
-                        labelConfrimare.setText("SUCCESS: Parola schimbata!");
+                        try {
+                            updateParolaBD(username,parolaNoua);
+                            labelConfrimare.setText("SUCCESS: Parola schimbata!");
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            labelConfrimare.setText("ERROR: Update esuat!");
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                            labelConfrimare.setText("ERROR: Update esuat!");
+                        }
                     } else {
                         labelConfrimare.setText("ERROR: Parola noua repetata incorect!");
-                        updateParolaBD(username,parolaNoua);
                     }
                 } else {
                     labelConfrimare.setText("ERROR: Username sau parola veche incorecte!");
