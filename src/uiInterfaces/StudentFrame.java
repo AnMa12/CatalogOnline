@@ -18,6 +18,9 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import java.awt.List;
 import javax.swing.JTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTextArea;
 
 
 public class StudentFrame extends UserFrame{
@@ -29,6 +32,8 @@ public class StudentFrame extends UserFrame{
 	private JTextField nrAbsenteTF;
 	private JTextField medieGeneralaTF;
 	private JButton btnOverview;
+	private JComboBox comboBox;
+	private JTextArea textArea;
 	public StudentFrame(String id,String nume,String prenume,Connection connection) {
 		elev=new Elev(id,nume,prenume);
 		this.connection=connection;
@@ -37,7 +42,7 @@ public class StudentFrame extends UserFrame{
 	protected void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
-		frame.setBounds(100, 100, 312, 523);
+		frame.setBounds(100, 100, 704, 530);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 			
@@ -49,8 +54,37 @@ public class StudentFrame extends UserFrame{
 		addButtonGetNote();
 		addListaRezultat();
 		addOverview();
+		addComments();
 	}
 
+	private void addComments() {
+		JButton btnSubmit = new JButton("Submit");
+		comboBox = new JComboBox();
+		btnSubmit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String comentariu = textArea.getText();
+				String numeProf = comboBox.getSelectedItem().toString();
+				String idProf = elev.getIdProfesor(numeProf, connection);
+				elev.addComment(elev.getId(), idProf, comentariu, connection);
+				textArea.removeAll();
+			}
+		});
+		btnSubmit.setBounds(468, 415, 89, 23);
+		frame.getContentPane().add(btnSubmit);
+		
+		
+		comboBox.setBounds(416, 187, 177, 22);
+		frame.getContentPane().add(comboBox);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(374, 216, 256, 165);
+		frame.getContentPane().add(textArea);
+		ArrayList<String> profi = elev.getProfesori(elev.getId(),connection);
+		for(String x:profi)
+		comboBox.addItem(x);
+		
+	}
 	public String getClasaByIdElev(int idElev) throws SQLException {
 		Statement stmt = connection.createStatement();
 		String sql = "SELECT clasa\n" +
@@ -139,6 +173,7 @@ public class StudentFrame extends UserFrame{
 		});
 		btnOverview.setBounds(99, 444, 89, 23);
 		frame.getContentPane().add(btnOverview);
+		
 	}
 
 	private void addTextFieldsforRapoarte() {
@@ -211,6 +246,7 @@ public class StudentFrame extends UserFrame{
             	for(Nota x:Elev.note)
 				{
 				list.add(x.toString());
+				
 				}
 			}
 		});
