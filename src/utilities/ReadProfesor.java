@@ -67,4 +67,21 @@ public interface ReadProfesor {
 		}
 		return materii;
 	}
+	default ArrayList<String> getComentarii(String id_profesor,Connection connection){
+		ArrayList <String> comentarii=new ArrayList<>();
+		PreparedStatement  stmt=null;
+		try {
+			stmt = connection.prepareStatement("select comentariu from comentarii com where id_profesor = ?;");
+			stmt.setString(1,  id_profesor);
+			ResultSet rs=stmt.executeQuery();
+			while(rs.next())
+			{  
+				comentarii.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return comentarii;
+	}
+	
 }

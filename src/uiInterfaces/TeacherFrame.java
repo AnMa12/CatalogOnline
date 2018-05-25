@@ -20,9 +20,9 @@ import entities.Nota;
 import entities.Profesor;
 import utilities.UserFrame;
 import javax.swing.JTextField;
+import javax.swing.JList;
 
 public class TeacherFrame extends UserFrame{
-
 	private Connection connection;
 	private Profesor profesor;
 	private JComboBox<String> selectorElevi;
@@ -49,7 +49,7 @@ public class TeacherFrame extends UserFrame{
 	}
 	protected void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 647, 500);
+		frame.setBounds(100, 100, 706, 644);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -78,6 +78,25 @@ public class TeacherFrame extends UserFrame{
 		addButtonCalculeazaMediaClasei();
 		addLables();
 		addTextFieldsforRapoarte();
+		addComments();
+	}
+	private void addComments() {
+
+		List list_1 = new List();
+		list_1.setBounds(323, 387, 330, 207);
+		frame.getContentPane().add(list_1);
+		
+		JLabel lblCeSpunElevii = new JLabel("Ce spun elevii despre mine?");
+		lblCeSpunElevii.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblCeSpunElevii.setBounds(341, 357, 275, 24);
+		frame.getContentPane().add(lblCeSpunElevii);
+		
+		ArrayList<String> comentarii = profesor.getComentarii(profesor.getId(), connection);
+		
+		for ( String x : comentarii) {
+			
+			list_1.add(x);
+		}
 	}
 	private void addTextFieldsforRapoarte() {
 		medieTF = new JTextField();
@@ -91,6 +110,7 @@ public class TeacherFrame extends UserFrame{
 		nrAbsenteTF.setColumns(10);
 		nrAbsenteTF.setBounds(152, 404, 37, 20);
 		frame.getContentPane().add(nrAbsenteTF);
+		
 	}
 	private void addLables() {
 		JLabel lblNumarAbsente = new JLabel("Numar absente:");
