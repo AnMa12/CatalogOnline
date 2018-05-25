@@ -70,4 +70,48 @@ public interface ReadElev {
 		}
 		return materii;
 	}
+	default ArrayList<String> getProfesori(String id_elev,Connection connection){
+		ArrayList <String> profi=new ArrayList<>();
+		PreparedStatement stmt=null;
+		try {
+		stmt = connection.prepareStatement("select pr.nume , pr.prenume\r\n" + 
+		"from Elev el join Clasa cls on el.clasa = cls.clasa\r\n" + 
+		" join Profesor pr on cls.id_profesor = pr.id_profesor\r\n" + 
+		"where id_elev = ?;");
+		stmt.setString(1, id_elev);
+		ResultSet rs=stmt.executeQuery();
+		while(rs.next())
+		{ 
+			profi.add(rs.getString(1) +"-"+ rs.getString(2));
+		}
+		} catch (SQLException e) {
+		e.printStackTrace();
+		}
+		return profi;
+		}
+	default String getIdProfesor(String numele,Connection connection)
+	{
+	String parts[] = numele.split("-");
+	String nume = parts[0];
+	String prenume = parts[1];
+
+	PreparedStatement stmt=null;
+	String id_prof = "0";
+	try {
+	stmt = connection.prepareStatement("select id_profesor\n" +
+	"from Profesor\n" +
+	"where nume = ? and prenume = ?;");
+	stmt.setString(1, nume);
+	stmt.setString(2, prenume);
+	ResultSet rs=stmt.executeQuery();
+	while(rs.next())
+	{
+	id_prof = rs.getString(1);
+	}
+	} catch (SQLException e) {
+	e.printStackTrace();
+	}
+	return id_prof;
+
+	}
 }
