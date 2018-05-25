@@ -41,7 +41,7 @@ public class OverviewFrame extends javax.swing.JFrame {
         if(medieElevVal >= medieClasaVal) {
             //System.out.println(medieElevVal + " " + medieClasaVal);
 
-            mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+            mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
             mesajOverview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             mesajOverview.setText("Felicitari" + prenumeElev + "!");
 
@@ -57,7 +57,7 @@ public class OverviewFrame extends javax.swing.JFrame {
         } else {
             //System.out.println(medieElevVal + " " + medieClasaVal);
 
-            mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+            mesajOverview.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
             mesajOverview.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             mesajOverview.setText("Invata mai mult, " + prenumeElev + "!");
 

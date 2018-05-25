@@ -181,6 +181,11 @@ public class DirectorFrame extends UserFrame {
 	}
 
 	private void addLabels() {
+		JLabel lblNume = new JLabel("Director: Vasile Ciuchina");
+		lblNume.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNume.setBounds(31, 20, 250, 24);
+		frame.getContentPane().add(lblNume);
+
 		JLabel lblNewLabel = new JLabel("Selecteaza clasa:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(31, 41, 129, 24);

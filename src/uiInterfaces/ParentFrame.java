@@ -99,9 +99,14 @@ public class ParentFrame extends UserFrame{
 	}
 
 	private void addSelectorElev() {
+		JLabel lblNume = new JLabel("Parinte: " + parinte.getNume() + " " + parinte.getPrenume());
+		lblNume.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNume.setBounds(36, 12, 250, 28);
+		frame.getContentPane().add(lblNume);
+
 		JLabel lblAlegeElev = new JLabel("Alege elev:");
 		lblAlegeElev.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblAlegeElev.setBounds(36, 31, 93, 28);
+		lblAlegeElev.setBounds(36, 35, 93, 28);
 		frame.getContentPane().add(lblAlegeElev);
 		
 		selectorElev = new JComboBox<String>();

@@ -163,6 +163,11 @@ public class StudentFrame extends UserFrame{
 		
 	}
 	private void addLables() {
+		JLabel lblName = new JLabel("Elev: " + elev.getNume() + " " + elev.getPrenume());
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblName.setBounds(12, 23, 250, 24);
+		frame.getContentPane().add(lblName);
+
 		JLabel lblNote = new JLabel("Alege materia:");
 		lblNote.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNote.setBounds(12, 43, 194, 24);
