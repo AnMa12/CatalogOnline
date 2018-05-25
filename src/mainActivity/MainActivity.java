@@ -37,7 +37,8 @@ public class MainActivity {
 					else
 						if(ld.getStatut().equals("2"))
 							userFrame =new StudentFrame(ld.getId(),ld.getNume(),ld.getPrenume(),(Connection) ld.getConnection());
-						else 
+						 
+							else 
 							if(ld.getStatut().equals("1"))
 								userFrame =new TeacherFrame(ld.getId(),ld.getNume(),ld.getPrenume(),(Connection) ld.getConnection());
 							else 

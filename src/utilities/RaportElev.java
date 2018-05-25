@@ -72,5 +72,19 @@ public interface RaportElev {
 		}
 		return suma/materii.size();
 	}
+	 default Boolean addComment(String id_elev,String id_profesor,String comment,Connection connection) {
+		 PreparedStatement stmt=null;
+		 try {
+		 stmt = (PreparedStatement) connection.prepareStatement("INSERT INTO comentarii Values (?,?,?);");
+		 stmt.setString(1, id_elev);
+		 stmt.setString(2, id_profesor);
+		 stmt.setString(3, comment);
+		 stmt.executeUpdate();
+		 } catch (SQLException e) {
+		 e.printStackTrace();
+		 return false;
+		 }
+		 return true;
+		 }
 }
 
