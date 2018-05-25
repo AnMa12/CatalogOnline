@@ -53,6 +53,12 @@ public class TeacherFrame extends UserFrame{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		JLabel lblNume = new JLabel("Profesor: " + profesor.getNume() + " " + profesor.getPrenume());
+		lblNume.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNume.setBounds(12, 23, 250, 24);
+		frame.getContentPane().add(lblNume);
+
+
 		JLabel lblNote = new JLabel("Alege materia:");
 		lblNote.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNote.setBounds(12, 43, 194, 24);
