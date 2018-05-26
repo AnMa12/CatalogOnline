@@ -2,22 +2,22 @@
 # Documentatie
 
 Descriere
-Aplicatie desktop destinata liceelor, scopul principal al acesteia fiind facilitarea comunicarii intre parinti – elevi – profesori.
+Aplicatie desktop destinata liceelor, scopul principal al acesteia fiind facilitarea comunicarii intre parinti â€“ elevi â€“ profesori.
 
 Principalele functionalitati for fi: 
 	-login personalizat (cu username si parola) pentru fiecare utilizator, avand patru tipuri de utilizatori: director, profesor, parinte si elev. Pentru fiecare utilizator dupa login se face redirectioneaza catre o pagina specifica.
 	-fiecare user isi poate schimba parola
 	-profesorii: 
-•	pot adauga si motiva absentele elevilor
-•	pot adauga note
+		â€¢ pot adauga si motiva absentele elevilor
+		â€¢ pot adauga note
 	-elevii :
-•	isi pove dea notele si absentele
-•	isi pot vedea un overview asupra performantei
-•	isi pot vedea media finala
--directorii:
-•	pot actualize lista de elevi
--parintii: 
-•	au acces la notele si absentele elevului
+		â€¢ isi pot da notele si absentele
+		â€¢ isi pot vedea un overview asupra performantei
+		â€¢ isi pot vedea media finala
+	-directorii:
+		â€¢ pot actualize lista de elevi
+	-parintii: 
+		â€¢ au acces la notele si absentele elevului
 	
 User stories
 https://trello.com/b/m2b7YwGc/catalog-online
