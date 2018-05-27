@@ -1,5 +1,4 @@
 # CatalogOnline
-# Documentatie
 
 Descriere
 Aplicatie desktop destinata liceelor, scopul principal al acesteia fiind facilitarea comunicarii intre parinti – elevi – profesori.
