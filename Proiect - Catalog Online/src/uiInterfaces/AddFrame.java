@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class AddFrame {
+	
 	protected JFrame frame;
 	private JTextField numeTF;
 	private JTextField prenumeTF;

@@ -1,8 +1,9 @@
 package entities;
 import java.util.ArrayList;
 
+import utilities.RaportElev;
 import utilities.ReadElev;
-public class Elev implements ReadElev{
+public class Elev implements ReadElev,RaportElev{
 	private String id;
 	private String nume;
 	private String prenume;
