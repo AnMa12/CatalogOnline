@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Register.iml" filepath="$PROJECT_DIR$/Register.iml" />
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/CatalogOnline.iml" filepath="$PROJECT_DIR$/.idea/CatalogOnline.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/CatalogOnline.iml" filepath="$PROJECT_DIR$/CatalogOnline.iml" />
+>>>>>>> a5674a60d17d450ab29d3fb965299cdcaa00e599
     </modules>
   </component>
 </project>
